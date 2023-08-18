@@ -26,7 +26,7 @@ char *add_path(char **tokens, char **path_tok)
         cmd = malloc(cmd_len);
 
         if (cmd == NULL)
-            return (NULL); // Memory allocation failed
+            return (NULL);  /*Memory allocation failed*/
 
         /* Concatenate the directory path and command */
         snprintf(cmd, cmd_len, "%s/%s", path_tok[i], tokens[0]);
@@ -34,11 +34,11 @@ char *add_path(char **tokens, char **path_tok)
         /* Check if the concatenated path corresponds to an existing file */
         if (stat(cmd, &stat_buf) == 0)
         {
-            tokens[0] = cmd; // Update the tokens array
+            tokens[0] = cmd; /* Update the tokens array */
             break;
         }
 
-        free(cmd); // Free memory if the command does not exist
+        free(cmd); /* Free memory if the command does not exist*/
         i++;
     }
 

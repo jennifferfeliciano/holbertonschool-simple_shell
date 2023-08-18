@@ -19,5 +19,6 @@ char *add_path(char **tokens, char **path_tok);
 int execution(char **tokens, char **env);
 int die(char **tokens);
 void free_array(char **tokens);
+char *path(char **env);
 
 #endif /* SIMPLE_SHELL_H */
