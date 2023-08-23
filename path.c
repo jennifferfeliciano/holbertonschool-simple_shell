@@ -7,21 +7,21 @@
  */
 char *path(char **env)
 {
-    int i = 0;
-    char *path, **copy_path;
+	int i = 0;
+	char *path, **copy_path;
 
-    while (env[i])
-    {
-        if (strncmp(env[i], "PATH", 4) == 0)
-        {
-            path = strdup(env[i]);
-            copy_path = tokenization(path, "=");
-            free(path);
-            path = strdup(copy_path[1]);
-        }
-        i++;
-    }
+	while (env[i])
+	{
+		if (strncmp(env[i], "PATH", 4) == 0)
+		{
+			path = strdup(env[i]);
+			copy_path = tokenization(path, "=");
+			free(path);
+			path = strdup(copy_path[1]);
+		}
+		i++;
+	}
 
-    free_array(copy_path);
-    return (path);
+	free_array(copy_path);
+	return (path);
 }

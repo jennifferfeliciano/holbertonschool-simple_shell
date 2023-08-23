@@ -2,12 +2,12 @@
 
 int main(int ac, char **av, char **env)
 {
-    char *ptr = NULL, **tokens = NULL;
+	char *ptr = NULL, **tokens = NULL;
 	size_t n = 0;
 
-    (void)ac;
+	(void)ac;
 	(void)av;
-    
+
 	while (1)
 	{
 		tokens = NULL;
@@ -25,11 +25,11 @@ int main(int ac, char **av, char **env)
 		if (tokens[0] != NULL)
 		{
 			if (strcmp(tokens[0], "env") == 0)
-            {
-                handle_env_command(env);
-                free_array(tokens);
-                continue;
-            }
+			{
+				handle_env_command(env);
+				free_array(tokens);
+				continue;
+			}
 			if (die(tokens) == 1)
 				execution(tokens, env);
 		}

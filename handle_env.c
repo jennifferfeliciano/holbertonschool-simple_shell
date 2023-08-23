@@ -7,11 +7,11 @@
  */
 void handle_env_command(char **env)
 {
-    int i;
+	int i;
 
-    for (i = 0; env[i]; i++)
-    {
-        write(1, env[i], strlen(env[i]));
-        write(1, "\n", 1);
-    }
+	for (i = 0; env[i]; i++)
+	{
+		write(1, env[i], strlen(env[i]));
+		write(1, "\n", 1);
+	}
 }
