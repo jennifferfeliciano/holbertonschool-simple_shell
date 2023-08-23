@@ -26,6 +26,8 @@ void handle_interactive_shell(char **env)
     char *input = NULL, **tokens = NULL;
     size_t n = 0;
 
+
+
     while (1)
     {
         tokens = NULL;
@@ -52,7 +54,6 @@ void handle_interactive_shell(char **env)
             {
                 handle_env_command(env);
                 free_array(tokens);
-                write(1, "\n", 1);
                 continue;
             }
 

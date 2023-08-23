@@ -2,13 +2,8 @@
 
 /**
  * path - Function that gets the path from environment.
- *
  * @env: Environment variables.
- *
- * Return: A string that contains environment paths, or NULL if it fails.
- *
- * Description: This function searches for the "PATH" environment variable
- * and returns a concatenated string of directories.
+ * Return: A string of environment paths, or NULL.
  */
 char *path(char **env)
 {

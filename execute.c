@@ -24,41 +24,30 @@ int execution(char **tokens, char **env)
         /* Get the directories in PATH and tokenize them */
         char *path_tok = path(env);
         char **cmd = tokenization(path_tok, ":");
+
         free(path_tok);
-
-        /* Attempt to find the command in PATH */
-        tokens[0] = add_path(tokens, cmd);
-        free_array(cmd);
-
-        /* If the command is not found in PATH */
-        if (stat(tokens[0], &stat_buf) != 0)
+        tokens[0] = add_path(tokens, cmd);/* Attempt to find the command in PATH */
+        if (stat(tokens[0], &stat_buf) != 0)/* If the command is not found in PATH */
         {
+            free_array(cmd);
+            free_array(tokens);
             perror("command not found");
             return (0);
         }
     }
 
-    /* Fork a child process to execute the command */
-    child_pid = fork();
+    
+    child_pid = fork(); /* Fork a child process to execute the command */
 
     if (child_pid == -1)
-    {
         perror("Child process failed");
-    }
-    else if (child_pid == 0)
+    else if (child_pid == 0)/* Execute the command in the child process */
     {
-        /* Execute the command in the child process */
         if (execve(tokens[0], tokens, env) == -1)
-        {
             perror(tokens[0]);
-            exit(EXIT_FAILURE);
-        }
     }
     else
-    {
-        /* Wait for the child process to complete */
-        waitpid(child_pid, &status, WUNTRACED);
-    }
-
+        wait(&status);
+    free_array(tokens);
     return (1);
 }

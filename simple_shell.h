@@ -9,14 +9,12 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
-char **tokenization(char *str, char *delim);
+char **tokenization(char *ptr, char *delim);
 int execution(char **tokens, char **env);
 char *path(char **env);
 char *add_path(char **tokens, char **path_tok);
 int die(char **tokens);
 int is_interactive_mode(void);
 void free_array(char **tokens);
-void handle_non_interactive_mode(int ac, char **av, char **env);
-void handle_interactive_shell(char **env);
-
+void handle_env_command(char **env);
 #endif
