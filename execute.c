@@ -50,7 +50,7 @@ int execution(char **tokens, char **env)
         /* Execute the command in the child process */
         if (execve(tokens[0], tokens, env) == -1)
         {
-            perror("execve");
+            perror(tokens[0]);
             exit(EXIT_FAILURE);
         }
     }
