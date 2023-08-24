@@ -17,4 +17,5 @@ int die(char **tokens);
 int is_interactive_mode(void);
 void free_array(char **tokens);
 void handle_env_command(char **env);
+void handle_commands(char **tokens, char **env);
 #endif

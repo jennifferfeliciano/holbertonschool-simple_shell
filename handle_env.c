@@ -15,3 +15,17 @@ void handle_env_command(char **env)
 		write(1, "\n", 1);
 	}
 }
+
+void handle_commands(char **tokens, char **env)
+{
+
+		if (strcmp(tokens[0], "env") == 0)
+			{
+				handle_env_command(env);
+				free_array(tokens);
+			}
+		
+		if (die(tokens) == 1)
+				execution(tokens, env);
+
+}

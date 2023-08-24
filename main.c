@@ -22,17 +22,9 @@ int main(int ac, char **av, char **env)
 		}
 		tokens = tokenization(ptr, " \n");
 		free(ptr);
+
 		if (tokens[0] != NULL)
-		{
-			if (strcmp(tokens[0], "env") == 0)
-			{
-				handle_env_command(env);
-				free_array(tokens);
-				continue;
-			}
-			if (die(tokens) == 1)
-				execution(tokens, env);
-		}
+			handle_commands(tokens, env);
 		else
 			free(tokens);
 	}
