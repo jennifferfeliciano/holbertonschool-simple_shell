@@ -7,7 +7,7 @@
  *
  * Return: 1, if the word is not exit, or 0 if it exit
  */
-int die(char **tokens)
+int kill_shell(char **tokens)
 {
 	if (strcmp(tokens[0], "exit") == 0)
 	{

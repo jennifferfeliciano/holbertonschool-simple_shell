@@ -25,7 +25,7 @@ void handle_commands(char **tokens, char **env)
 				free_array(tokens);
 			}
 		
-		if (die(tokens) == 1)
+		if (kill_shell(tokens) == 1)
 				execution(tokens, env);
 
 }
