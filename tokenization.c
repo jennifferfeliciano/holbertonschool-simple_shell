@@ -14,31 +14,35 @@
  */
 char **tokenization(char *ptr, char *delim)
 {
-	int i = 0;
-	char *token = NULL;
-	char **array = NULL;
+    char *token = NULL, **tokens = NULL;
+    int i = 0;
 
+    tokens = malloc(sizeof(char *) * 10);
+    token = strtok(ptr, delim);
 
-	/* Allocate space for the array of tokens */
-	array = malloc(strlen(ptr) + 1);
+    while (token)
+    {
+        tokens[i] = malloc(sizeof(char) * (_strlen(token) + 1));
+        if (tokens[i] == NULL)
+        {
+            // Handle allocation failure
+            for (int j = 0; j < i; j++)
+                free(tokens[j]);
+            free(tokens);
+            return NULL;
+        }
+        _strcpy(tokens[i], token);
+        i++;
+        token = NULL;
+        token = strtok(NULL, delim);
+    }
 
-	/* Tokenize the input string using strtok */
-	token = strtok(ptr, delim);
+    tokens[i] = NULL;
 
-	while (token)
-	{
-		/* Allocate space for the token and copy it */
-		array[i] = malloc(sizeof(char) * (strlen(token) + 1));
-		strcpy(array[i], token);
+    // Free memory for each token before freeing the tokens array
+    for (int j = 0; j < i; j++)
+        free(tokens[j]);
 
-		i++;
-		token = NULL; /*Reset token */
-
-		/* Tokenize the next part of the input string */
-		token = strtok(NULL, delim);
-	}
-
-	array[i] = NULL; /*Mark the end of the array with NULL*/
-	free(token);      /*Free the last token (if any)*/
-	return (array);
+    free(token);
+    return tokens;
 }

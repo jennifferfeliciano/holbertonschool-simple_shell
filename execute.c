@@ -35,8 +35,6 @@ int execution(char **tokens, char **env)
 			return (0);
 		}
 	}
-
-
 	child_pid = fork(); /* Fork a child process to execute the command */
 
 	if (child_pid == -1)
