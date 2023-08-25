@@ -9,6 +9,8 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
+#define TOKEN_Delimitator ":"
+
 char **tokenization(char *ptr, char *delim);
 int execution(char **tokens, char **env);
 char *path(char **env);
@@ -17,5 +19,10 @@ int kill_shell(char **tokens);
 int is_interactive_mode(void);
 void free_array(char **tokens);
 void handle_env_command(char **env);
-void handle_commands(char **tokens, char **env);
+int handle_commands(char **tokens, char **env);
+
+void interactive_shell(char **env);
+void noninteractive_shell(char **env);
+char *get_line();
+
 #endif

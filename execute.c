@@ -42,10 +42,14 @@ int execution(char **tokens, char **env)
 	else if (child_pid == 0)/* Execute the command in the child process */
 	{
 		if (execve(tokens[0], tokens, env) == -1)
-			perror(tokens[0]);
+			perror("execve failed");
+		exit(EXIT_FAILURE);
 	}
 	else
+	{
 		wait(&status);
-	free_array(tokens);
+		free_array(tokens);	
+	}
+		
 	return (1);
 }

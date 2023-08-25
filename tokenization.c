@@ -17,7 +17,12 @@ char **tokenization(char *ptr, char *delim)
     char *token = NULL, **tokens = NULL;
     int i = 0;
 
-    tokens = malloc(sizeof(char *) * 10);
+    tokens = malloc(sizeof(char *) * 64);
+    if (!tokens)
+	    {
+		    fprintf(stderr, "lsh: allocation error\n");
+		    exit(EXIT_FAILURE);
+	    }
     token = strtok(ptr, delim);
 
     while (token)
