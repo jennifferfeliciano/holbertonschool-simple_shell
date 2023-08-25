@@ -1,0 +1,50 @@
+.TH SIMPLE_SHELL 1 "August 2023" "Simple Shell Manual PAGE"
+
+.SH NAME
+simple_shell - UNIX command line interpreter
+
+.SH SYNOPSIS
+.B simple_shell
+.I simple_shell.h
+.B ./hsh
+
+.SH DESCRIPTION
+simple_shell is a simple UNIX command line interpreter that allows users to execute commands, manage processes, and manipulate the environment. It provides an interactive mode where users can enter commands one by one, and a non-interactive mode.
+
+.SH OPTIONS
+Any command line programs can be interpreted by this simple shell.
+This shell works in both interactive and non-interactive modes.
+
+.PP
+.B Example of interactive mode:
+.nf
+$ ./hsh
+($) /bin/ls
+hsh main.c shell.c
+($)
+($) exit
+$
+.fi
+
+.PP
+.B Example of non-interactive mode:
+.nf
+$ echo "/bin/ls" | ./hsh
+hsh main.c shell.c test_ls_2
+$
+$ cat test_ls_2
+/bin/ls
+/bin/ls
+$
+$ cat test_ls_2 | ./hsh
+hsh main.c shell.c test_ls_2
+hsh main.c shell.c test_ls_2
+$
+.fi
+
+.SH BUGS
+Please report any bugs or issues to <@holbertonstudents.com> or <6294@holbertonstudents.com>.
+
+.SH AUTHORS
+Alexander Puga and Jenniffer Feliciano.
+
