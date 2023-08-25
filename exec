@@ -1,0 +1,4 @@
+#!/bin/bash
+rm hsh;
+gcc -g *.c -o hsh;
+valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes ./hsh

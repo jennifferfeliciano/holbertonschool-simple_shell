@@ -19,7 +19,7 @@ void interactive_shell(char **env)
 {
 	char *line;
 	char **args;
-	int status;
+	int status = 1;
 
 	while (status)
 	{
@@ -29,7 +29,7 @@ void interactive_shell(char **env)
 		status = handle_commands(args, env);
 
 		free(line);
-		free(args);
+		free_array(args);
 	}
 }
 
@@ -46,7 +46,7 @@ void noninteractive_shell(char **env)
 		status = handle_commands(args, env);
 
 		free(line);
-		free(args);
+		free_array(args);
 	}
 	
 

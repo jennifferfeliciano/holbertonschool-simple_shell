@@ -34,6 +34,7 @@ int execution(char **tokens, char **env)
 			perror("command not found");
 			return (0);
 		}
+		free_array(cmd);
 	}
 	child_pid = fork(); /* Fork a child process to execute the command */
 
@@ -48,7 +49,7 @@ int execution(char **tokens, char **env)
 	else
 	{
 		wait(&status);
-		free_array(tokens);	
+		;	
 	}
 		
 	return (1);

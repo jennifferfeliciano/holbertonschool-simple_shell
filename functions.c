@@ -3,7 +3,7 @@
 /**
  * die - function that will check if tokens 0 is the word exit
  *
- * @tokens: array of tokens that we will checked only the first token
+ * @tokens: array of tokens that we will checked only the first tokean
  *
  * Return: 1, if the word is not exit, or 0 if it exit
  */
@@ -62,8 +62,6 @@ int handle_commands(char **tokens, char **env)
 		
 		if (kill_shell(tokens) == 1)
 				execution(tokens, env);
-
-	free_array(tokens); 
 
 	return(1);
 }
