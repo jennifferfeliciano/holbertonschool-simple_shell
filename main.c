@@ -41,7 +41,7 @@ void interactive_shell(char **env)
 	}
 
 	free(env);
-	exit(0);
+	exit(2);
 }
 
 void noninteractive_shell(char **env)
@@ -58,7 +58,7 @@ void noninteractive_shell(char **env)
             free(line);
             free_array(args);
 			free(env);
-			exit(0);
+			exit(2);
         }
 
 		handle_commands(args, env);
