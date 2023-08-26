@@ -32,7 +32,8 @@ void interactive_shell(char **env)
         {
             free(line);
             free_array(args);
-            break;
+            free(env);
+			exit(0);
         }
 		status = handle_commands(args, env);
 
@@ -40,8 +41,7 @@ void interactive_shell(char **env)
 		free_array(args);
 	}
 
-	free(env);
-	exit(0);
+
 }
 
 void noninteractive_shell(char **env)
