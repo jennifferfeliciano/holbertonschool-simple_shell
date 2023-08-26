@@ -9,12 +9,12 @@
  */
 int kill_shell(char **tokens)
 {
-	if (strcmp(tokens[0], "exit") == 0)
-	{
-		free_array(tokens);
-		exit(0);
-	}
-	return (1);
+    if (strcmp(tokens[0], "exit") == 0)
+    {
+        exit(0);
+        free_array(tokens);
+    }
+    return 1;
 }
 
 /**
@@ -53,15 +53,22 @@ void handle_env_command(char **env)
 
 int handle_commands(char **tokens, char **env)
 {
+	int should_exit = 0;
 
-		if (strcmp(tokens[0], "env") == 0)
-			{
-				handle_env_command(env);
-				free_array(tokens);
-			}
-		
-		if (kill_shell(tokens) == 1)
-				execution(tokens, env);
+	if (strcmp(tokens[0], "env") == 0)
+		{
+			handle_env_command(env);
+			free_array(tokens);
+		}
+
+	should_exit = kill_shell(tokens);
+
+	if (should_exit)
+    {
+        execution(tokens, env);
+        free_array(tokens); 
+
+    }
 
 	return(1);
 }

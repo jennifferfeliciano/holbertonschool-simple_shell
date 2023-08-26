@@ -14,29 +14,55 @@
  */
 char **tokenization(char *ptr, char *delim)
 {
-    char *token = NULL, **tokens = NULL;
-    int i = 0;
+    char **tokens = NULL;
+    char **temp_tokens = NULL;  
+    char **final_tokens = NULL;
+    char *token;  
+    int token_count = 0;  
 
-    tokens = malloc(sizeof(char *) * 64);
-    if (!tokens)
-	    {
-		    fprintf(stderr, "lsh: allocation error\n");
-		    exit(EXIT_FAILURE);
-	    }
-    token = strtok(ptr, delim);
+    token = strtok(ptr, delim);  /* Get the first token */
 
     while (token)
     {
-        tokens[i] = malloc(sizeof(char) * (strlen(token) + 1));
+        /* Reallocate memory for tokens array */
+        temp_tokens = realloc(tokens, sizeof(char *) * (token_count + 1));
+        if (!temp_tokens)
+        {
+            perror("realloc error");
+            free_array(tokens); /* Free already allocated tokens */
+            exit(EXIT_FAILURE);
+        }
 
-        strcpy(tokens[i], token);
-        i++;
-        token = NULL;
-        token = strtok(NULL, delim);
+        tokens = temp_tokens;
+
+        /* Duplicate the token and store it in tokens array */
+        tokens[token_count] = strdup(token);
+        if (tokens[token_count] == NULL)
+        {
+            perror("strdup error");
+            free_array(tokens); /* Free already allocated tokens */
+            exit(EXIT_FAILURE);
+        }
+
+        token_count++;
+        token = strtok(NULL, delim); /* Get the next token */
     }
 
-    tokens[i] = NULL;
+    /* Reallocate memory for tokens array with the final count */
+    final_tokens = realloc(tokens, sizeof(char *) * (token_count + 1));
+    
+    if (final_tokens == NULL)
+    {
+        perror("realloc error");
+        free_array(tokens); /* Free already allocated tokens */
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
+        tokens = final_tokens; /* Update the tokens pointer only if realloc succeeded */
+    }
+    tokens[token_count] = NULL; /* Mark the end of the tokens array */
 
-    free(token);
     return tokens;
 }
+

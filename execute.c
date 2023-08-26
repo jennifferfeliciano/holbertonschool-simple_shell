@@ -29,12 +29,9 @@ int execution(char **tokens, char **env)
 		tokens[0] = add_path(tokens, cmd);/* Attempt to find the command in PATH */
 		if (stat(tokens[0], &stat_buf) != 0)/* If the command is not found in PATH */
 		{
-			free_array(cmd);
-			free_array(tokens);
 			perror("command not found");
 			return (0);
 		}
-		free_array(cmd);
 	}
 	child_pid = fork(); /* Fork a child process to execute the command */
 
@@ -49,7 +46,6 @@ int execution(char **tokens, char **env)
 	else
 	{
 		wait(&status);
-		;	
 	}
 		
 	return (1);

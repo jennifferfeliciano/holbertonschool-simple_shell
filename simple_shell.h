@@ -16,7 +16,6 @@ int execution(char **tokens, char **env);
 char *path(char **env);
 char *add_path(char **tokens, char **path_tok);
 int kill_shell(char **tokens);
-int is_interactive_mode(void);
 void free_array(char **tokens);
 void handle_env_command(char **env);
 int handle_commands(char **tokens, char **env);

@@ -37,18 +37,14 @@ void noninteractive_shell(char **env)
 {
 	char *line;
 	char **args;
-	int status;
 
-	while (status)
-	{
+	
 		line = get_line();
 		args = tokenization(line, " \n");
-		status = handle_commands(args, env);
+		handle_commands(args, env);
 
 		free(line);
-		free_array(args);
-	}
-	
+		free(args);
 
 }
 
