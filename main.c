@@ -26,11 +26,22 @@ void interactive_shell(char **env)
 		write(1, "$ ", 2);
 		line = get_line();
 		args = tokenization(line, " \n");
+
+
+		if (args[0] != NULL && strcmp(args[0], "exit") == 0)
+        {
+            free(line);
+            free_array(args);
+            break;
+        }
 		status = handle_commands(args, env);
 
 		free(line);
 		free_array(args);
 	}
+
+	free(env);
+	exit(0);
 }
 
 void noninteractive_shell(char **env)
@@ -41,10 +52,16 @@ void noninteractive_shell(char **env)
 	
 		line = get_line();
 		args = tokenization(line, " \n");
-		handle_commands(args, env);
 
-		free(line);
-		free(args);
+		if (args[0] != NULL && strcmp(args[0], "exit") == 0)
+        {
+            free(line);
+            free_array(args);
+			free(env);
+			exit(0);
+        }
+
+		handle_commands(args, env);
 
 }
 
