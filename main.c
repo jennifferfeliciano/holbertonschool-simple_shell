@@ -5,7 +5,10 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av; 
 
+
+
 	if (!isatty(0))
+		
 		noninteractive_shell(env);
 	else
 		interactive_shell(env);
@@ -17,61 +20,63 @@ int main(int ac, char **av, char **env)
 
 void interactive_shell(char **env)
 {
-	char *line = NULL;
-	char **args;
-	int status = 1;
-	ssize_t read = 0;
-	size_t size = 0;
+    char *line;
+    char **args;
+    int status = 1;
+    ssize_t read;
+    size_t size = 0;
+	int running = 1;
 
-
-	while (status)
-	{
-		write(1, "$ ", 2);
-		read = getline(&line, &size, stdin);
-		if (read == -1)
-			break;
-		args = tokenization(line, " \n");
-
-
-		if (args[0] != NULL && strcmp(args[0], "exit") == 0)
+    while (running)
+    {
+        write(1, "$ ", 2);
+        read = getline(&line, &size, stdin);
+        if (read == -1)
+            break;
+        args = tokenization(line, " \n");
+		
+    
+        if (kill_shell(args))
         {
             free(line);
             free_array(args);
-			exit(0);
+            running = 0;
         }
-		status = handle_commands(args, env);
-
-	}
-	free(line);
-
-
+		else
+			status = handle_commands(args, env);
+		
+		
+        free(line);
+        free_array(args);
+    }
+	exit(status);
 }
 
 void noninteractive_shell(char **env)
 {
-	char *line = NULL;
-	char **args;
-	ssize_t read = 0;
-	size_t size = 0;
-	
-	read = getline(&line, &size, stdin);
+    char *line = NULL;
+    char **args;
+    size_t size = 0;
+    int status = 0;
+    ssize_t read;
 
-
-	args = tokenization(line, " \n");
-
-
-	if ((args[0] != NULL && strcmp(args[0], "exit") == 0 )| (read == -1))
+    if ((read = getline(&line, &size, stdin)) != -1)
     {
-    free(line);
-    free_array(args);
-	exit(0);
+        args = tokenization(line, " \n");
+
+        if (kill_shell(args))
+        {
+            free(line);
+            free_array(args);
+            exit(status);
+        }
+
+        status = handle_commands(args, env);
+
+        free(line);
+        free_array(args);
     }
 
-	handle_commands(args, env);
-	
-	free(line);
-    free_array(args);
-
-
+    exit(status);
 }
 

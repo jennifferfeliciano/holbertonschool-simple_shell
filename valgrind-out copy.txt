@@ -84,3 +84,8 @@
 ==57595==    by 0x109783: main (in /home/puga/Documents/Holberton Git/holbertonschool-simple_shell/hsh)
 ==57595== 
 ==57595== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+
+
+echo "/bin/ls
+ls
+ls" | ./hsh

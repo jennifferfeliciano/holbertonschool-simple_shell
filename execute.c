@@ -50,5 +50,5 @@ int execution(char **tokens, char **env)
     {
         wait(&status);
     }
-    return (1);
+    return WEXITSTATUS(status);
 }

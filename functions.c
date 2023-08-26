@@ -11,10 +11,10 @@ int kill_shell(char **tokens)
 {
     if (strcmp(tokens[0], "exit") == 0)
     {
-        exit(0);
         free_array(tokens);
+        return 1; /*Indicate that the program should exit*/
     }
-    return 1;
+    return 0; /*Indicate that shell should continue*/
 }
 
 /**
@@ -53,7 +53,7 @@ void handle_env_command(char **env)
 
 int handle_commands(char **tokens, char **env)
 {
-    int status;
+    int status = -1;
     
     if (tokens[0] != NULL && strcmp(tokens[0], "env") == 0)
     {
@@ -62,8 +62,11 @@ int handle_commands(char **tokens, char **env)
         return 1;
     }
 
-
+    
     status = execution(tokens, env);
+        
+            
+
     return status;
 }
 
