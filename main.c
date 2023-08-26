@@ -54,7 +54,6 @@ void noninteractive_shell(char **env)
         {
             free(line);
             free_array(args);
-			free(env);
 			exit(0);
         }
 
