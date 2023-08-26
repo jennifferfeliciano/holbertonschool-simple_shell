@@ -17,14 +17,19 @@ int main(int ac, char **av, char **env)
 
 void interactive_shell(char **env)
 {
-	char *line;
+	char *line = NULL;
 	char **args;
 	int status = 1;
+	ssize_t read = 0;
+	size_t size = 0;
+
 
 	while (status)
 	{
 		write(1, "$ ", 2);
-		line = get_line();
+		read = getline(&line, &size, stdin);
+		if (read == -1)
+			break;
 		args = tokenization(line, " \n");
 
 
@@ -37,27 +42,36 @@ void interactive_shell(char **env)
 		status = handle_commands(args, env);
 
 	}
+	free(line);
 
 
 }
 
 void noninteractive_shell(char **env)
 {
-	char *line;
+	char *line = NULL;
 	char **args;
-
+	ssize_t read = 0;
+	size_t size = 0;
 	
-		line = get_line();
-		args = tokenization(line, " \n");
+	read = getline(&line, &size, stdin);
 
-		if (args[0] != NULL && strcmp(args[0], "exit") == 0)
-        {
-            free(line);
-            free_array(args);
-			exit(0);
-        }
 
-		handle_commands(args, env);
+	args = tokenization(line, " \n");
+
+
+	if ((args[0] != NULL && strcmp(args[0], "exit") == 0 )| (read == -1))
+    {
+    free(line);
+    free_array(args);
+	exit(0);
+    }
+
+	handle_commands(args, env);
+	
+	free(line);
+    free_array(args);
+
 
 }
 

@@ -15,53 +15,21 @@
 char **tokenization(char *ptr, char *delim)
 {
     char **tokens = NULL;
-    char **temp_tokens = NULL;  
-    char **final_tokens = NULL;
-    char *token;  
-    int token_count = 0;  
+    char *token = NULL;
+    int i = 0;
 
-    token = strtok(ptr, delim);  /* Get the first token */
+    tokens = malloc(sizeof(char *) * 10);
+    token = strtok(ptr, delim);
 
     while (token)
     {
-        /* Reallocate memory for tokens array */
-        temp_tokens = realloc(tokens, sizeof(char *) * (token_count + 1));
-        if (!temp_tokens)
-        {
-            perror("realloc error");
-            free_array(tokens); /* Free already allocated tokens */
-            exit(EXIT_FAILURE);
-        }
-
-        tokens = temp_tokens;
-
-        /* Duplicate the token and store it in tokens array */
-        tokens[token_count] = strdup(token);
-        if (tokens[token_count] == NULL)
-        {
-            perror("strdup error");
-            free_array(tokens); /* Free already allocated tokens */
-            exit(EXIT_FAILURE);
-        }
-
-        token_count++;
-        token = strtok(NULL, delim); /* Get the next token */
+        tokens[i] = malloc(sizeof(char) * (strlen(token) + 1));
+        strcpy(tokens[i], token);
+        i++;
+        token = strtok(NULL, delim);
     }
 
-    /* Reallocate memory for tokens array with the final count */
-    final_tokens = realloc(tokens, sizeof(char *) * (token_count + 1));
-    
-    if (final_tokens == NULL)
-    {
-        perror("realloc error");
-        free_array(tokens); /* Free already allocated tokens */
-        exit(EXIT_FAILURE);
-    }
-    else
-    {
-        tokens = final_tokens; /* Update the tokens pointer only if realloc succeeded */
-    }
-    tokens[token_count] = NULL; /* Mark the end of the tokens array */
+    tokens[i] = NULL;
 
     return tokens;
 }

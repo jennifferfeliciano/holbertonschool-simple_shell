@@ -9,19 +9,21 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
-#define TOKEN_Delimitator ":"
-
-char **tokenization(char *ptr, char *delim);
-int execution(char **tokens, char **env);
-char *path(char **env);
-char *add_path(char **tokens, char **path_tok);
-int kill_shell(char **tokens);
-void free_array(char **tokens);
-void handle_env_command(char **env);
-int handle_commands(char **tokens, char **env);
-
 void interactive_shell(char **env);
 void noninteractive_shell(char **env);
-char *get_line();
+
+int handle_commands(char **tokens, char **env);
+void handle_env_command(char **env);
+
+char **tokenization(char *ptr, char *delim);
+
+int execution(char **tokens, char **env);
+char *path(char **env);
+char *add_path(char **command, char **path_tok);
+
+void free_array(char **tokens);
+int kill_shell(char **tokens);
+
+
 
 #endif

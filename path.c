@@ -26,6 +26,8 @@ char *path(char **env)
 	return (path);
 }
 
+
+
 /**
  * add_path - Concatenates the command with directories in PATH.
  *
@@ -39,35 +41,34 @@ char *path(char **env)
  * path corresponds to an existing file. If a valid path is found, it
  * updates the tokens array and returns the updated command path.
  */
-char *add_path(char **tokens, char **path_tok)
+char *add_path(char **command, char **path_tok)
 {
-	char *cmd;
-	int i = 0;
-	struct stat stat_buf;
+    char *full_path = NULL;
+    int i = 0;
+    struct stat stat_buf;
 
-	while (path_tok[i])
-	{
-		/* Calculate the length for the concatenated path */
-		size_t cmd_len = strlen(path_tok[i]) + strlen(tokens[0]) + 2;
-		cmd = malloc(cmd_len);
+    while (path_tok[i])
+    {
+        size_t cmd_len = strlen(path_tok[i]) + strlen(command[0]) + 2;
+        full_path = malloc(cmd_len);
 
-		if (cmd == NULL)
-			return (NULL);  /*Memory allocation failed*/
+        if (full_path == NULL)
+        {
+            perror("malloc error");
+            exit(EXIT_FAILURE);
+        }
 
-		/* Concatenate the directory path and command */
-		snprintf(cmd, cmd_len, "%s/%s", path_tok[i], tokens[0]);
+        snprintf(full_path, cmd_len, "%s/%s", path_tok[i], command[0]);
 
-		/* Check if the concatenated path corresponds to an existing file */
-		if (stat(cmd, &stat_buf) == 0)
-		{
-			tokens[0] = cmd; /* Update the tokens array */
-			break;
-		}
+        if (stat(full_path, &stat_buf) == 0)
+        {
+            break;
+        }
 
-		free(cmd); /* Free memory if the command does not exist*/
-		i++;
-	}
+        free(full_path);
+        i++;
+    }
 
-	return (tokens[0]);
+    return full_path;
 }
 

@@ -24,15 +24,15 @@ int kill_shell(char **tokens)
  */
 void free_array(char **tokens)
 {
-	int i = 0;
+    int i = 0;
 
-	while (tokens[i])
-	{
-		free(tokens[i]);
-		i++;
-	}
+    while (tokens[i])
+    {
+        free(tokens[i]);
+        i++;
+    }
 
-	free(tokens);
+    free(tokens);
 }
 
 /**
@@ -53,15 +53,18 @@ void handle_env_command(char **env)
 
 int handle_commands(char **tokens, char **env)
 {
-	if (strcmp(tokens[0], "env") == 0)
-		{
-			handle_env_command(env);
-			free_array(tokens);
-		}
-    execution(tokens, env);
+    int status;
+    
+    if (tokens[0] != NULL && strcmp(tokens[0], "env") == 0)
+    {
+        handle_env_command(env);
+        free_array(tokens);
+        return 1;
+    }
 
-	return(1);
 
+    status = execution(tokens, env);
+    return status;
 }
 
 
