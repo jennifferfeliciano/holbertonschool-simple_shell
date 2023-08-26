@@ -32,13 +32,10 @@ void interactive_shell(char **env)
         {
             free(line);
             free_array(args);
-            free(env);
 			exit(0);
         }
 		status = handle_commands(args, env);
 
-		free(line);
-		free_array(args);
 	}
 
 
