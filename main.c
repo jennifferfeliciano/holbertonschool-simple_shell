@@ -37,18 +37,16 @@ void interactive_shell(char **env)
 		
     
         if (kill_shell(args))
-        {
-            free(line);
-            free_array(args);
+        {            
             running = 0;
         }
 		else
 			status = handle_commands(args, env);
 		
 		
-        free(line);
-        free_array(args);
     }
+	free_array(args);
+	free(line);
 	exit(status);
 }
 

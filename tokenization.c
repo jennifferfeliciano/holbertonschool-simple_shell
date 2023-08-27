@@ -29,7 +29,6 @@ char **tokenization(char *ptr, char *delim)
         token = strtok(NULL, delim);
     }
 
-    free(token);
     tokens[i] = NULL;
 
     return tokens;
