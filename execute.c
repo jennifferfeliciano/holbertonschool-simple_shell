@@ -14,6 +14,7 @@
  */
 int execution(char **tokens, char **env)
 {
+	char *full_path;
 	pid_t child_pid;
 	int status;
 	struct stat stat_buf;
@@ -26,30 +27,44 @@ int execution(char **tokens, char **env)
 		char **cmd = tokenization(path_tok, ":");
 
 		free(path_tok);
-		tokens[0] = add_path(tokens, cmd);/* Attempt to find the command in PATH */
-		if (stat(tokens[0], &stat_buf) != 0)/* If the command is not found in PATH */
+		full_path = add_path(tokens, cmd); /* Attempt to find the command in PATH */
+		if (stat(full_path, &stat_buf) != 0)
 		{
+			perror("bork bork");
 			free_array(cmd);
-			free_array(tokens);
-			perror("command not found");
-			return (0);
+			return (2);
 		}
+		tokens[0] = full_path;
+		free_array(cmd);
 	}
 	child_pid = fork(); /* Fork a child process to execute the command */
 
-	if (child_pid == -1)
-		perror("Child process failed");
-	else if (child_pid == 0)/* Execute the command in the child process */
-	{
-		if (execve(tokens[0], tokens, env) == -1)
-			perror("execve failed");
-		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		wait(&status);
-		free_array(tokens);
-	}
+		if (child_pid == -1)
+			perror("Child process failed");
+		else if (child_pid == 0)/* Execute the command in the child process */
+		{
+			if (execve(tokens[0], tokens, env) == -1)
+				perror("execve failed");
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			wait(&status);
+			free_array(tokens);
+		}
 
 	return (1);
+}
+if (child_pid == -1)
+	perror("Child process failed");
+else if (child_pid == 0) /* Execute the command in the child process */
+{
+	if (execve(tokens[0], tokens, env) == -1)
+		perror("execve failed");
+}
+else
+{
+	wait(&status);
+}
+return (WEXITSTATUS(status));
 }

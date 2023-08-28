@@ -22,6 +22,7 @@ char *get_line()
 	{
 		line[n_chars - 1] = '\0';
 	}
-
+	/*Use getline to read the input line */
+	getline(&line, &bufsize, stdin);
 	return (line);
 }

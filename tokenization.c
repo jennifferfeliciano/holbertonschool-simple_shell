@@ -14,7 +14,7 @@
  */
 char **tokenization(char *ptr, char *delim)
 {
-	char *token = NULL, **tokens = NULL;
+		char *token = NULL, **tokens = NULL;
 	int i = 0;
 
 	tokens = malloc(sizeof(char *) * 64);
@@ -34,9 +34,24 @@ char **tokenization(char *ptr, char *delim)
 		token = NULL;
 		token = strtok(NULL, delim);
 	}
+		char **tokens = NULL;
+	char *token = NULL;
+	int i = 0;
 
-	tokens[i] = NULL;
+	tokens = malloc(sizeof(char *) * 10);
+	token = strtok(ptr, delim);
 
-	free(token);
+	while (token)
+	{
+		tokens[i] = malloc(sizeof(char) * (strlen(token) + 1));
+		strcpy(tokens[i], token);
+		i++;
+		token = strtok(NULL, delim);
+	}
+
+		tokens[i] = NULL;
+
+		free(token);
 	return (tokens);
+		return (tokens);
 }

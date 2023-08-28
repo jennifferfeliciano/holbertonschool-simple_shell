@@ -3,7 +3,7 @@
 /**
  * kill_shell - function that will check if tokens 0 is the word exit
  *
- * @tokens: array of tokens that we will checked only the first token
+ * @tokens: array of tokens that we will checked only the first tokean
  *
  * Return: 1, if the word is not exit, or 0 if it exit
  */
@@ -11,10 +11,9 @@ int kill_shell(char **tokens)
 {
 	if (strcmp(tokens[0], "exit") == 0)
 	{
-		free_array(tokens);
-		exit(0);
+		return (1); /*Indicate that the program should exit*/
 	}
-	return (1);
+	return (0); /*Indicate that shell should continue*/
 }
 
 /**
@@ -72,6 +71,21 @@ int handle_commands(char **tokens, char **env)
 	free_array(tokens);
 
 	return (1);
+	int status = -1;
+
+	if (tokens[0] != NULL && strcmp(tokens[0], "env") == 0)
+	{
+		handle_env_command(env);
+		free_array(tokens);
+		return (0);
+	}
+
+
+	status = execution(tokens, env);
+
+
+
+	return (status);
 }
 
 

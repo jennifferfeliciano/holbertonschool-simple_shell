@@ -13,7 +13,10 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 
+
+
 	if (!isatty(0))
+
 		noninteractive_shell(env);
 	else
 		interactive_shell(env);
@@ -33,18 +36,32 @@ void interactive_shell(char **env)
 {
 	char *line;
 	char **args;
-	int status;
+	int status = 1;
+	ssize_t read;
+	size_t size = 0;
+	int running = 1;
 
-	while (status)
+	while (running)
 	{
 		write(1, "$ ", 2);
-		line = get_line();
+		read = getline(&line, &size, stdin);
+		if (read == -1)
+			break;
 		args = tokenization(line, " \n");
-		status = handle_commands(args, env);
 
-		free(line);
-		free(args);
+
+		if (kill_shell(args))
+		{
+			running = 0;
+		}
+		else
+			status = handle_commands(args, env);
+
+
 	}
+	free_array(args);
+	free(line);
+	exit(status);
 }
 
 /**
@@ -55,20 +72,33 @@ void interactive_shell(char **env)
 
 void noninteractive_shell(char **env)
 {
-	char *line;
+	char *line = NULL;
 	char **args;
-	int status;
+	size_t size = 0;
+	int status = 0;
+	ssize_t read;
 
-	while (status)
+	read = getline(&line, &size, stdin);
+	if (read != -1)
 	{
-		line = get_line();
 		args = tokenization(line, " \n");
+
+		if (kill_shell(args))
+		{
+			free(line);
+			free_array(args);
+			exit(status);
+		}
+
 		status = handle_commands(args, env);
 
-		free(line);
+			free(line);
 		free(args);
 	}
 
-
+		free(line);
+	free_array(args);
 }
 
+exit(status);
+}
