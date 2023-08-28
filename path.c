@@ -49,6 +49,7 @@ char *add_path(char **tokens, char **path_tok)
 	{
 		/* Calculate the length for the concatenated path */
 		size_t cmd_len = strlen(path_tok[i]) + strlen(tokens[0]) + 2;
+
 		cmd = malloc(cmd_len);
 
 		if (cmd == NULL)
