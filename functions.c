@@ -1,7 +1,7 @@
 #include "simple_shell.h"
 
 /**
- * die - function that will check if tokens 0 is the word exit
+ * kill_shell - function that will check if tokens 0 is the word exit
  *
  * @tokens: array of tokens that we will checked only the first token
  *
@@ -36,7 +36,7 @@ void free_array(char **tokens)
 }
 
 /**
- * handle_env_command - Handle the "env" built-in command.
+ * handle_env_command- Handle the "env" built-in command.
  *
  * @env: Environment variables.
  */
@@ -51,21 +51,27 @@ void handle_env_command(char **env)
 	}
 }
 
+/**
+ *handle_commands- Function to handle the "env" command
+ *@tokens: Array of strings representing the command and its arguments
+ *@env: Array of strings representing environment variables
+ *Return: 1, indicating continued shell loop execution.
+ */
+
 int handle_commands(char **tokens, char **env)
 {
+	if (strcmp(tokens[0], "env") == 0)
+	{
+		handle_env_command(env);
+		free_array(tokens);
+	}
 
-		if (strcmp(tokens[0], "env") == 0)
-			{
-				handle_env_command(env);
-				free_array(tokens);
-			}
-		
-		if (kill_shell(tokens) == 1)
-				execution(tokens, env);
+	if (kill_shell(tokens) == 1)
+		execution(tokens, env);
 
-	free_array(tokens); 
+	free_array(tokens);
 
-	return(1);
+	return (1);
 }
 
 

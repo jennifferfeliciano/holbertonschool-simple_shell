@@ -1,9 +1,17 @@
 #include "simple_shell.h"
 
+/**
+ * main- Entry point
+ * @ac: The number of arguments
+ * @av: An array of strings containing the arguments
+ * @env: Environment variables
+ * Return: EXIT_SUCCESS if  successful completion
+ */
+
 int main(int ac, char **av, char **env)
 {
 	(void)ac;
-	(void)av; 
+	(void)av;
 
 	if (!isatty(0))
 		noninteractive_shell(env);
@@ -14,6 +22,12 @@ int main(int ac, char **av, char **env)
 	return (EXIT_SUCCESS);
 
 }
+
+/**
+ * interactive_shell - Main loop of an interactive shell
+ * @env: Array of strings representing environment variables
+ * Return: void
+ */
 
 void interactive_shell(char **env)
 {
@@ -33,6 +47,12 @@ void interactive_shell(char **env)
 	}
 }
 
+/**
+ * noninteractive_shell - Main loop of a non-interactive shell
+ * @env: Array of strings representing environment variables
+ * Return: void
+ */
+
 void noninteractive_shell(char **env)
 {
 	char *line;
@@ -48,7 +68,7 @@ void noninteractive_shell(char **env)
 		free(line);
 		free(args);
 	}
-	
+
 
 }
 
